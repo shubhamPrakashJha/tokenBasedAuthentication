@@ -28,6 +28,20 @@ class User(Base):
 		s = Serializer(secret_key, expires_in=expiration)
 		return s.dumps({'id': self.id})
 
+	@staticmethod
+	def verify_auth_token(self, token):
+		s = Serializer(secret_key)
+		try:
+			data = s.loads(token)
+		except SignatureExpired:
+			# Valid token but expired
+			return None
+		except BadSignature:
+			# Invalid token
+			return None
+		user_id = data['id']
+		return user_id
+
 
 engine = create_engine('sqlite:///usersWithTokens.db')
 
