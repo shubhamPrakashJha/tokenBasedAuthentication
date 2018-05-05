@@ -7,7 +7,7 @@ import random, string
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
 						  BadSignature, SignatureExpired)
 
-
+Base = declarative_base()
 
 class User(Base):
 	__tablename__ = 'user'
